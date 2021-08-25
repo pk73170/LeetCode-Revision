@@ -1,0 +1,47 @@
+Approach*1(Uisng n_element)
+T.C-O(N*LOGK)
+S.C-O(1)
+class Solution {
+public:
+    vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
+        nth_element(points.begin(), points.begin() + k - 1, points.end(), [](vector<int>& p, vector<int>& q) {
+            return p[0] * p[0] + p[1] * p[1] < q[0] * q[0] + q[1] * q[1];
+        });
+        return vector<vector<int>>(points.begin(), points.begin() + k);
+    }
+};
+
+
+Approach-2(Using MinHeap)
+T.C-O(NLOGK)
+S.C-O(1)
+
+class Compare {
+public:
+    bool operator()(const vector<int> &v1, const vector<int> &v2) {
+        return (v1[0] * v1[0] + v1[1] * v1[1]) > (v2[0] * v2[0] + v2[1] * v2[1]);
+    }
+};
+
+class Solution {
+public:
+    
+    vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
+        priority_queue<vector<int>,vector<vector<int>>,Compare>pq;
+        
+        for(int i=0;i<points.size();i++)
+        {
+            pq.push(points[i]);
+        }
+        vector<vector<int>>res;
+        
+        for(int i=0;i<k;i++)
+        {
+            res.push_back(pq.top());
+            pq.pop();
+        }
+        
+        return res;
+        
+    }
+};

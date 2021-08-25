@@ -1,0 +1,64 @@
+T.C-O(N^2)
+S.C-O(N)
+
+class StockSpanner {
+public:
+    vector<int>v;
+    StockSpanner() {
+        
+    }
+    
+    int next(int price) {
+        v.push_back(price);
+        int n=v.size();
+        int span=1;
+       
+        for(int i=0;i<n;i++)
+        {
+            span=1;
+            for(int j=i-1;j>=0;j--)
+            {
+                if(v[j]<=v[i])
+                    span++;
+                else
+                    break;
+            }
+        }
+        return span;
+    }
+};
+
+Approach-2(Using Stack)
+T.C-O(N)
+S.C-O(1)
+
+class StockSpanner {
+public:
+
+    stack<pair<int,int>>st;
+    
+    StockSpanner() {
+        
+    }
+    
+    int next(int price) {
+        
+            if(st.empty() || st.top().first>price)
+            {
+                st.push({price,1});
+                return 1;
+            }
+            else{
+                int res=1;
+          while(!st.empty() && st.top().first<=price)
+            {
+              res+=st.top().second;
+              st.pop();
+          }
+                st.push({price,res});
+                return res;
+                
+            }
+                    
+    }
+};

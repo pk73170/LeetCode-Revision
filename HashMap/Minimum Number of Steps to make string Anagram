@@ -1,0 +1,31 @@
+Approach-1(Using Hashmap)
+T.C-O(N)
+S.C-O(N)
+
+class Solution {
+public:
+    int minSteps(string s, string t) {
+        unordered_map<char,int>mp;
+        
+        int sum=0;
+        
+        for(auto x:s)
+        {
+            mp[x]++;
+        }
+        
+        for(auto x:t)
+        {
+            mp[x]--;
+        }
+        
+        for(auto x:mp)
+        {
+            if(x.second<0)
+                sum+=x.second;
+        }
+        
+        return abs(sum);
+        
+    }
+};

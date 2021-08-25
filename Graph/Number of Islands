@@ -1,0 +1,117 @@
+Approach-1(Using DFS)
+T.C.-O(M*N)
+
+class Solution {
+public:
+    void DFS(vector<vector<char>>& grid, int i, int j) {
+
+        if(i < 0 || i >= grid.size() || j < 0 || j >= grid[0].size())
+            return;
+
+        if( grid[i][j]=='2' || grid[i][j] == '0')
+            return;
+        
+        grid[i][j] = '2';
+        
+        DFS(grid, i+1, j);
+        DFS(grid, i, j-1);
+        DFS(grid, i-1, j);
+        DFS(grid, i, j+1);
+    }
+    int numIslands(vector<vector<char>>& grid) {
+        int islands = 0;
+        for(int i = 0; i < grid.size(); i++) {
+            for(int j = 0; j < grid[0].size(); j++) {
+                
+                if(grid[i][j] == '1') {
+                    DFS(grid, i, j);
+                    ++islands;
+                } 
+            }
+        }
+            return islands;
+        
+    }
+};
+
+Approach-2(Using BFS)
+T.C-O(M*N)
+
+
+class Solution {
+public:
+    int numIslands(vector<vector<char>>& grid) {
+        int islands = 0; 
+        
+      
+        for(int i=0; i<grid.size(); i++)
+        {
+            for(int j=0; j<grid[i].size(); j++)
+            {
+               
+                if(grid[i][j] == '1')
+                {
+                    islands++;
+                    
+                  
+                    queue<pair<int,int>> q; 
+                    q.push({i,j});
+                    
+                    
+                    while(!q.empty())
+                    {
+                        pair<int, int> current = q.front();
+                        int x = current.first;
+                        int y = current.second;
+                        
+
+                        if(x < grid.size()-1)
+                        {
+                            if(grid[x+1][y] == '1')
+                            {
+                                q.push({x+1,y});
+                                grid[x+1][y] = '0';
+                            }
+                        }
+                        
+                        if(x > 0)
+                        {
+                            if(grid[x-1][y] == '1')
+                            {
+                                q.push({x-1,y});
+                                grid[x-1][y] = '0';
+                            }
+                        }
+                        
+                        if(y < grid[x].size()-1)
+                        {
+                            if(grid[x][y+1] == '1')
+                            {
+                                q.push({x,y+1});
+                                grid[x][y+1] = '0';
+                            }
+                                
+                        }
+                        
+                        if(y > 0)
+                        {
+                            if(grid[x][y-1] == '1')
+                            {
+                                q.push({x,y-1});
+                                grid[x][y-1] = '0';
+                            }
+                                
+                        }
+                        
+                        grid[x][y] = '0';
+                        
+                        q.pop();
+                    }
+                }
+            }
+        }
+        
+        
+        return islands;
+    }
+};
